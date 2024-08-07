@@ -231,17 +231,21 @@ const Profile: React.FC = () => {
                     status: 'PENDING'
                 })
             });
-
+    
             if (response.ok) {
                 setConnectionStatus('PENDING');
                 alert('Connection request sent!');
             } else {
-                alert('Failed to send connection request.');
+                const errorMessage = await response.text();
+                console.error('Failed to send connection request:', errorMessage);
+                alert(`Failed to send connection request. Status: ${response.status}`);
             }
         } catch (error) {
             console.error('Error sending connection request:', error);
+            alert('Error sending connection request.');
         }
     };
+    
 
     const handleSharePost = (postId: any) => {
         const url = `${window.location.origin}/post/${postId}`;
@@ -358,7 +362,8 @@ const Profile: React.FC = () => {
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
                                         <a className="nav-link active" href="#tab-posts" data-bs-toggle="tab">Posts</a>
-                                    </li>                                
+                                    </li>
+                                   
                                 </ul>
 
                                 <div className="tab-content">
@@ -382,14 +387,9 @@ const Profile: React.FC = () => {
                                                 <tbody>
                                                     {singlePostContents.length > 0 ? (
                                                         singlePostContents.map((content, index) => (
-
-                                                            <tr key={index}>                                                             
-                                                                {location.pathname === '/profile' || location.pathname === `/profile/${user?.userId}` ? (
-
                                                             <tr key={index}>
                                                                
                                                                 {/* {location.pathname === '/profile' || location.pathname === `/profile/${user?.userId}` ? (
-
                                                                     <td>
                                                                         {editingPostId === posts[index].postId ? (
                                                                             <form onSubmit={handleUpdatePost}>
@@ -407,10 +407,7 @@ const Profile: React.FC = () => {
                                                                             </form>
                                                                         ) : null}
                                                                     </td>
-
-                                                                ) : null}
-                                                              ) : null} */}
-
+                                                                ) : null} */}
 
 
 
@@ -461,7 +458,6 @@ const Profile: React.FC = () => {
                                                                 <div className="modal-content">
                                                                     <div className="modal-header">
                                                                         <h5 className="modal-title">Share Post</h5>
-
                                                                     </div>
                                                                     <div className="modal-body">
                                                                         <p>Copy the URL below to share the post:</p>
@@ -479,7 +475,6 @@ const Profile: React.FC = () => {
                                             </table>
                                         </div>
                                     </div>
-
                                     <div className="tab-pane fade" id="tab-followers">
                                         <ul className="widget-users row">
                                             <li className="col-md-6">
@@ -503,7 +498,6 @@ const Profile: React.FC = () => {
                                         <br />
                                         <a href="#" className="btn btn-success float-end">View all users</a>
                                     </div>
-
                                     <div className="tab-pane fade" id="tab-chat">
                                         <div className="conversation-wrapper">
                                             <div className="conversation-content">
@@ -528,10 +522,7 @@ const Profile: React.FC = () => {
                                                 </div>
                                             </div>
                                             <div className="conversation-new-message">
-
-
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -541,8 +532,6 @@ const Profile: React.FC = () => {
                 </div>
             </div>
         </div>
-
-
     );
 };
 

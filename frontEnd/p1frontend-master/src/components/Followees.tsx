@@ -5,10 +5,9 @@ import { useAuth } from '../context/AuthContext';
 
 interface followedUserProps {
     followedUsers: User[],
-    loading: boolean,
-    onUnFollow: (followeeUserId: number) => void
+    loading: boolean
 }   
-const Followee: React.FC<followedUserProps> = ({followedUsers, loading, onUnFollow}) => {
+const Followee: React.FC<followedUserProps> = ({followedUsers, loading}) => {
     const { user, token } = useAuth();
 
     //filter out any invalid entries that are not user objects
@@ -32,7 +31,6 @@ const Followee: React.FC<followedUserProps> = ({followedUsers, loading, onUnFoll
                             <div>
                                 <h5>{followedUser.firstName} {followedUser.lastName}</h5>
                                 <p>{followedUser.email}</p>
-                                <button onClick={() => user?.userId !== undefined && onUnFollow(followedUser.userId)} className="btn btn-danger unfollow-btn">Unfollow</button>
                             </div>
                         </div>
                     )))}
